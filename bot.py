@@ -4,7 +4,7 @@ TOKEN = ''
 CHAT_ID = ''  # узнай в @userinfobot
 
 bot = Bot(token=TOKEN)
-
+1
 keyboard = [
     [KeyboardButton(text="🎮 Играть в WOK", web_app=WebAppInfo(url="https://web-game1.vercel.app"))]
 ]
