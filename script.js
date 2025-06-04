@@ -2,10 +2,31 @@
 const cookBtn = document.getElementById("cookBtn");
 const orderBtn = document.getElementById("orderBtn");
 const result = document.getElementById("result");
+const currencyEl = document.getElementById("currency");
+const upgradeBtn = document.getElementById("upgradeBtn");
+const upgradeCostEl = document.getElementById("upgradeCost");
 
 // Telegram WebApp init
 const tg = window.Telegram.WebApp;
 tg.expand(); // Разворачиваем на весь экран
+
+// Игровые переменные
+let currency = parseInt(localStorage.getItem("currency") || "0");
+let earnings = parseInt(localStorage.getItem("earnings") || "1");
+let upgradeCost = parseInt(localStorage.getItem("upgradeCost") || "10");
+
+function updateUI() {
+  currencyEl.innerText = currency;
+  upgradeCostEl.innerText = upgradeCost;
+}
+
+function saveProgress() {
+  localStorage.setItem("currency", currency);
+  localStorage.setItem("earnings", earnings);
+  localStorage.setItem("upgradeCost", upgradeCost);
+}
+
+updateUI();
 
 const dishes = [
   "Вок с курицей и терияки",
@@ -17,10 +38,26 @@ const dishes = [
 cookBtn.onclick = () => {
   const dish = dishes[Math.floor(Math.random() * dishes.length)];
   result.innerText = `🔥 Ты приготовил: ${dish}`;
+  currency += earnings;
   orderBtn.style.display = "inline-block";
+  updateUI();
+  saveProgress();
 };
 
 orderBtn.onclick = () => {
   tg.sendData("order"); // Отправка данных в Telegram-бот
   tg.close(); // Закрытие WebApp
+};
+
+upgradeBtn.onclick = () => {
+  if (currency >= upgradeCost) {
+    currency -= upgradeCost;
+    earnings += 1;
+    upgradeCost = Math.round(upgradeCost * 1.5);
+    updateUI();
+    saveProgress();
+    result.innerText = "🎉 Ваш повар стал опытнее!";
+  } else {
+    result.innerText = "Недостаточно средств для улучшения";
+  }
 };
