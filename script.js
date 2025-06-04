@@ -7,6 +7,24 @@ let lastSpawn = 0;
 let spawnInterval = 1000; // ms
 let gravity = 0.25;
 let animationId;
+let paused = false;
+
+const pauseBtn = document.getElementById('pauseBtn');
+
+function togglePause() {
+    if (paused) {
+        paused = false;
+        lastSpawn = performance.now();
+        pauseBtn.textContent = 'Pause';
+        animationId = requestAnimationFrame(gameLoop);
+    } else {
+        paused = true;
+        pauseBtn.textContent = 'Resume';
+        cancelAnimationFrame(animationId);
+    }
+}
+
+pauseBtn.addEventListener('click', togglePause);
 
 function random(min, max) {
     return Math.random() * (max - min) + min;
