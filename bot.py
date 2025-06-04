@@ -1,7 +1,7 @@
 rom telegram import Bot, ReplyKeyboardMarkup, KeyboardButton, WebAppInfo
 
-TOKEN = '7513458526:AAHJVC3Q0xs6cp7CW8yijzaa4AQ1L5F8HxI'
-CHAT_ID = '765808288'  # узнай в @userinfobot
+TOKEN = ''
+CHAT_ID = ''  # узнай в @userinfobot
 
 bot = Bot(token=TOKEN)
 
